@@ -10,8 +10,8 @@ function createContact(event) {
 	const createContactPhone = document.getElementById('createContactPhone');
 	const contactList = document.getElementById('contactList');
 
-	const contactListItem = document.createElement('li');
-	contactListItem.innerHTML =
+	const listItem = document.createElement('li');
+	listItem.innerHTML =
 	`
 		<input type="text" value="${createContactName.value}" disabled>
 		<input type="text" value="${createContactPhone.value}" disabled>
@@ -19,11 +19,11 @@ function createContact(event) {
 		<input type="button" class="saveContactButton" value="Spara" hidden>
 		<input type="button" class="deleteContactButton" value="Radera">
 	`;
-	contactListItem.getElementsByClassName('editContactButton')[0].addEventListener('click', editContact);
-	contactListItem.getElementsByClassName('saveContactButton')[0].addEventListener('click', saveContact);
-	contactListItem.getElementsByClassName('deleteContactButton')[0].addEventListener('click', deleteContact);
+	listItem.getElementsByClassName('editContactButton')[0].addEventListener('click', editContact);
+	listItem.getElementsByClassName('saveContactButton')[0].addEventListener('click', saveContact);
+	listItem.getElementsByClassName('deleteContactButton')[0].addEventListener('click', deleteContact);
 
-	contactList.appendChild(contactListItem);
+	contactList.appendChild(listItem);
 
 	console.log(`Created contact with name '${createContactName.value}' and phone number '${createContactPhone.value}'`);
 }
@@ -52,16 +52,18 @@ function saveContact(event) {
 
 function deleteContact(event) {
 	const targetListItem = event.target.parentNode;
+	
 	targetListItem.remove();
+
 	console.log(`Deleted contact '${targetListItem.children[0].value}'`);
 }
 
 function clearList() {
-	const contactListItems = document.querySelectorAll('#contactList li');
+	const listItems = document.querySelectorAll('#contactList li');
 
 	console.log(`Deleting all contacts...`);
 
-	for (const listItem of contactListItems) {
+	for (const listItem of listItems) {
 		listItem.remove();
 		console.log(`Deleted contact '${listItem.children[0].value}'`);
 	}
