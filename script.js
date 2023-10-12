@@ -1,6 +1,7 @@
 "use strict";
 
 const createContactButton = document.getElementById('createContactButton');
+const clearListButton = document.getElementById('clearListButton');
 
 function createContact(event) {
 	event.preventDefault();
@@ -8,9 +9,6 @@ function createContact(event) {
 	const createContactName = document.getElementById('createContactName');
 	const createContactPhone = document.getElementById('createContactPhone');
 	const contactList = document.getElementById('contactList');
-
-	console.log('Name: ' + createContactName.value);
-	console.log('Phone: ' + createContactPhone.value);
 
 	const contactListItem = document.createElement('li');
 	contactListItem.innerHTML =
@@ -26,16 +24,19 @@ function createContact(event) {
 	contactListItem.getElementsByClassName('deleteContactButton')[0].addEventListener('click', deleteContact);
 
 	contactList.appendChild(contactListItem);
+
+	console.log(`Created contact with name '${createContactName.value}' and phone number '${createContactPhone.value}'`);
 }
 
 function editContact(event) {
 	const targetListItem = event.target.parentNode;
-	console.log(`Edit mode enabled on contact ${targetListItem.children[0].value}`);
 
 	targetListItem.children[0].disabled = false;
 	targetListItem.children[1].disabled = false;
 	targetListItem.children[2].hidden = true;
 	targetListItem.children[3].hidden = false;
+
+	console.log(`Edit mode enabled on contact '${targetListItem.children[0].value}'`);
 }
 
 function saveContact(event) {
@@ -46,13 +47,27 @@ function saveContact(event) {
 	targetListItem.children[2].hidden = false;
 	targetListItem.children[3].hidden = true;
 
-	console.log(`Saved contact ${targetListItem.children[0].value}`);
+	console.log(`Saved contact '${targetListItem.children[0].value}'`);
 }
 
 function deleteContact(event) {
 	const targetListItem = event.target.parentNode;
 	targetListItem.remove();
-	console.log(`Contact ${targetListItem.children[0].value} deleted`);
+	console.log(`Deleted contact '${targetListItem.children[0].value}'`);
+}
+
+function clearList() {
+	const contactListItems = document.querySelectorAll('#contactList li');
+
+	console.log(`Deleting all contacts...`);
+
+	for (const listItem of contactListItems) {
+		listItem.remove();
+		console.log(`Deleted contact '${listItem.children[0].value}'`);
+	}
+
+	console.log(`All contacts deleted`);
 }
 
 createContactButton.addEventListener('click', createContact);
+clearListButton.addEventListener('click', clearList);
