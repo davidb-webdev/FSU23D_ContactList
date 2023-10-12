@@ -19,8 +19,8 @@ function createContact(event) {
 		<input type="button" class="saveContactButton" value="Spara" hidden>
 		<input type="button" class="deleteContactButton" value="Radera">
 	`;
-	listItem.getElementsByClassName('editContactButton')[0].addEventListener('click', editContact);
-	listItem.getElementsByClassName('saveContactButton')[0].addEventListener('click', saveContact);
+	listItem.getElementsByClassName('editContactButton')[0].addEventListener('click', toggleEditContact);
+	listItem.getElementsByClassName('saveContactButton')[0].addEventListener('click', toggleEditContact);
 	listItem.getElementsByClassName('deleteContactButton')[0].addEventListener('click', deleteContact);
 
 	contactList.appendChild(listItem);
@@ -28,26 +28,19 @@ function createContact(event) {
 	console.log(`Created contact with name '${createContactName.value}' and phone number '${createContactPhone.value}'`);
 }
 
-function editContact(event) {
+function toggleEditContact(event) {
 	const targetListItem = event.target.parentNode;
 
-	targetListItem.children[0].disabled = false;
-	targetListItem.children[1].disabled = false;
-	targetListItem.children[2].hidden = true;
-	targetListItem.children[3].hidden = false;
+	// Toggle booleans:
+	targetListItem.children[0].disabled = !targetListItem.children[0].disabled;
+	targetListItem.children[1].disabled = !targetListItem.children[1].disabled;
+	targetListItem.children[2].hidden = !targetListItem.children[2].hidden;
+	targetListItem.children[3].hidden = !targetListItem.children[3].hidden;
 
-	console.log(`Edit mode enabled on contact '${targetListItem.children[0].value}'`);
-}
-
-function saveContact(event) {
-	const targetListItem = event.target.parentNode;
-
-	targetListItem.children[0].disabled = true;
-	targetListItem.children[1].disabled = true;
-	targetListItem.children[2].hidden = false;
-	targetListItem.children[3].hidden = true;
-
-	console.log(`Saved contact '${targetListItem.children[0].value}'`);
+	targetListItem.children[0].disabled
+		? console.log(`Saved contact '${targetListItem.children[0].value}'`)
+		: console.log(`Edit mode enabled on contact '${targetListItem.children[0].value}'`)
+	;
 }
 
 function deleteContact(event) {
