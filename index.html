@@ -11,20 +11,22 @@
 <body>
 	<header>
 		<h1>Kontaktlista</h1>
+
+		<form id="createContactForm">
+			<label for="createContactName">Namn:</label>
+			<input type="text" id="createContactName">
+	
+			<label for="createContactPhone">Telefon:</label>
+			<input type="tel" id="createContactPhone">
+	
+			<input type="submit" id="createContactButton" value="Skapa kontakt">
+			<input type="button" id="clearListButton" value="Radera lista">
+		</form>
 	</header>
 
-	<form>
-		<label for="createContactName">Namn:</label>
-		<input type="text" id="createContactName">
-
-		<label for="createContactPhone">Telefon:</label>
-		<input type="tel" id="createContactPhone">
-
-		<input type="submit" id="createContactButton" value="Skapa kontakt">
-		<input type="button" id="clearListButton" value="Radera lista">
-	</form>
-
-	<ul id="contactList"></ul>
+	<main>
+		<ul id="contactList"></ul>
+	</main>
 
 	<script src="script.js"></script>
 </body>

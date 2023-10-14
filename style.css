@@ -1,3 +1,53 @@
+/* =============== General =============== */
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font: 1rem Verdana, sans-serif;
+	margin: 0;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
 ul:empty::after {
-	content: 'Contact list empty';
+	content: 'Inga kontakter än';
+	display: block;
+	text-align: center;
+}
+
+li:nth-child(even) {
+	background-color: #eee;
+}
+
+input {
+	font-size: 1rem;
+}
+
+input[type="text"], input[type="tel"] {
+	width: 100%;
+	background-color: transparent;
+	border: 1px solid #ddd;
+}
+
+input:disabled {
+	border-color: transparent;
+	color: black;
+}
+
+/* =============== Specific =============== */
+#createContactForm, #contactList li {
+	display: flex;
+	justify-content: space-between;
+}
+
+.editContactButton, .deleteContactButton {
+	opacity: 0;
+}
+
+li:hover .editContactButton, li:hover .deleteContactButton {
+	opacity: 1;
 }

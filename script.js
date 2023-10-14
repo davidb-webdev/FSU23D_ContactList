@@ -30,7 +30,7 @@ function validateInput(event) {
 function createContact(event) {
 	event.preventDefault();
 
-	// Validate text fields, cancel if any are empty
+	// Validate text fields
 	if (validateInput(event) === false) {
 		return;
 	}
@@ -45,11 +45,9 @@ function createContact(event) {
 		<input type="text" class="contactName" value="${createContactName.value}" disabled>
 		<input type="tel" class="contactPhone" value="${createContactPhone.value}" disabled>
 		<input type="button" class="editContactButton" value="Ändra">
-		<input type="button" class="saveContactButton" value="Spara" hidden>
 		<input type="button" class="deleteContactButton" value="Radera">
 	`;
 	listItem.getElementsByClassName('editContactButton')[0].addEventListener('click', toggleEditContact);
-	listItem.getElementsByClassName('saveContactButton')[0].addEventListener('click', toggleEditContact);
 	listItem.getElementsByClassName('deleteContactButton')[0].addEventListener('click', deleteContact);
 	contactList.appendChild(listItem);
 
@@ -59,16 +57,20 @@ function createContact(event) {
 function toggleEditContact(event) {
 	const targetListItem = event.target.parentNode;
 
-	// Validate text fields, cancel if any are empty
+	// Validate text fields
 	if (validateInput(event) === false) {
 		return;
 	}
 
-	// Toggle booleans
+	// Toggle disabled and button text
 	targetListItem.children[0].disabled = !targetListItem.children[0].disabled;
 	targetListItem.children[1].disabled = !targetListItem.children[1].disabled;
-	targetListItem.children[2].hidden = !targetListItem.children[2].hidden;
-	targetListItem.children[3].hidden = !targetListItem.children[3].hidden;
+
+	if (targetListItem.children[2].value === 'Ändra') {
+		targetListItem.children[2].value = 'Spara';
+	} else {
+		targetListItem.children[2].value = 'Ändra';
+	}
 
 	targetListItem.children[0].disabled
 		? console.log(`Saved contact '${targetListItem.children[0].value}'`)
