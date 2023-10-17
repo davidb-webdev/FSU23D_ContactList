@@ -21,7 +21,7 @@
 }
 
 
-/* =============== General =============== */
+/* =============== Styling =============== */
 * {
 	box-sizing: border-box;
 }
@@ -129,12 +129,6 @@ input:disabled {
 	color: var(--foreground-color);
 }
 
-/* =============== Specific =============== */
-/* #createContactForm, #contactList li {
-	display: flex;
-	justify-content: space-between;
-} */
-
 #createContactForm {
 	position: fixed;
 	width: 100%;
@@ -142,14 +136,6 @@ input:disabled {
 	background-color: var(--overlay-color);
 	padding: var(--space-wide);
 }
-
-/* .editContactButton, .deleteContactButton {
-	opacity: 0;
-}
-
-li:hover .editContactButton, li:hover .deleteContactButton {
-	opacity: 1;
-} */
 
 #createContactForm .errorMessage {
 	color: red;
