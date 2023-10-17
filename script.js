@@ -1,7 +1,12 @@
 'use strict';
 
+const createContactForm = document.getElementById('createContactForm');
+const toggleCreateContactButton = document.getElementById('toggleCreateContactButton');
 const createContactButton = document.getElementById('createContactButton');
 const clearListButton = document.getElementById('clearListButton');
+
+// Hide create contact form on page load
+createContactForm.hidden = true;
 
 function validateInput(event) {
 	const targetParent = event.target.parentNode;
@@ -20,7 +25,7 @@ function validateInput(event) {
 			let errorMessage = document.createElement('p');
 			errorMessage.className = 'errorMessage';
 			errorMessage.innerText = 'Kontakter får inte innehålla tomma fält';
-			targetParent.appendChild(errorMessage);
+			textField.parentNode.appendChild(errorMessage);
 
 			return false;
 		}
@@ -52,6 +57,13 @@ function createContact(event) {
 	contactList.appendChild(listItem);
 
 	console.log(`Created contact with name '${createContactName.value}' and phone number '${createContactPhone.value}'`);
+
+	// Empty text fields
+	createContactName.value = '';
+	createContactPhone.value = '';
+
+	// Hide contact form
+	toggleCreateContactForm();
 }
 
 function toggleEditContact(event) {
@@ -95,5 +107,11 @@ function clearList() {
 	console.log(`All contacts deleted`);
 }
 
+function toggleCreateContactForm() {
+	createContactForm.hidden = !createContactForm.hidden;
+	console.log(`Contact form hidden? (${createContactForm.hidden})`);
+}
+
+toggleCreateContactButton.addEventListener('click', toggleCreateContactForm);
 createContactButton.addEventListener('click', createContact);
 clearListButton.addEventListener('click', clearList);

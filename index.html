@@ -7,24 +7,32 @@
 	<title>Contact list</title>
 
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round">
 </head>
 <body>
 	<header>
 		<h1>Kontaktlista</h1>
-
-		<form id="createContactForm">
-			<label for="createContactName">Namn:</label>
-			<input type="text" id="createContactName">
-	
-			<label for="createContactPhone">Telefon:</label>
-			<input type="tel" id="createContactPhone">
-	
-			<input type="submit" id="createContactButton" value="Skapa kontakt">
-			<input type="button" id="clearListButton" value="Radera lista">
-		</form>
+		<div>
+			<input type="button" id="toggleCreateContactButton" value="+">
+			<input type="button" id="clearListButton" value="x">
+		</div>
 	</header>
 
 	<main>
+		<form id="createContactForm">
+			<label for="createContactName">
+				<span>Namn</span>
+				<input type="text" id="createContactName">
+			</label>
+	
+			<label for="createContactPhone">
+				<span>Telefon</span>
+				<input type="tel" id="createContactPhone">
+			</label>
+
+			<input type="submit" id="createContactButton" value="Skapa kontakt">
+		</form>
+
 		<ul id="contactList"></ul>
 	</main>
 
