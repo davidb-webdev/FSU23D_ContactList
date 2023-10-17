@@ -1,13 +1,5 @@
 'use strict';
 
-const createContactForm = document.getElementById('createContactForm');
-const toggleCreateContactButton = document.getElementById('toggleCreateContactButton');
-const createContactButton = document.getElementById('createContactButton');
-const clearListButton = document.getElementById('clearListButton');
-
-// Hide create contact form on page load
-createContactForm.hidden = true;
-
 function validateInput(event) {
 	const targetParent = event.target.parentNode;
 	const textFields = targetParent.querySelectorAll('input[type="text"], input[type="tel"]');
@@ -31,6 +23,7 @@ function validateInput(event) {
 		}
 	}
 }
+
 
 function createContact(event) {
 	event.preventDefault();
@@ -58,13 +51,10 @@ function createContact(event) {
 
 	console.log(`Created contact with name '${createContactName.value}' and phone number '${createContactPhone.value}'`);
 
-	// Empty text fields
-	createContactName.value = '';
-	createContactPhone.value = '';
-
 	// Hide contact form
 	toggleCreateContactForm();
 }
+
 
 function toggleEditContact(event) {
 	const targetListItem = event.target.parentNode;
@@ -90,13 +80,15 @@ function toggleEditContact(event) {
 	;
 }
 
+
 function deleteContact(event) {
 	const targetListItem = event.target.parentNode;
 	targetListItem.remove();
 	console.log(`Deleted contact '${targetListItem.children[0].value}'`);
 }
 
-function clearList() {
+
+function clearContactList() {
 	const listItems = document.querySelectorAll('#contactList li');
 
 	console.log(`Deleting all contacts...`);
@@ -107,11 +99,40 @@ function clearList() {
 	console.log(`All contacts deleted`);
 }
 
+
 function toggleCreateContactForm() {
-	createContactForm.hidden = !createContactForm.hidden;
+	const createContactForm = document.getElementById('createContactForm');
+	
+	if (createContactForm.hidden === false) {
+		const createContactName = document.getElementById('createContactName');
+		const createContactPhone = document.getElementById('createContactPhone');
+
+		// Reset form
+		createContactName.value = '';
+		createContactName.blur();
+		createContactPhone.value = '';
+		createContactPhone.blur();
+		if (createContactForm.querySelector('.errorMessage')) {
+			createContactForm.querySelector('.errorMessage').remove();
+		}
+
+		createContactForm.hidden = true;
+	} else {
+		createContactForm.hidden = false;
+	}
+
 	console.log(`Contact form hidden? (${createContactForm.hidden})`);
 }
 
+
+// Event listeners
+const toggleCreateContactButton = document.getElementById('toggleCreateContactButton');
+const createContactButton = document.getElementById('createContactButton');
+const clearContactListButton = document.getElementById('clearContactListButton');
+
 toggleCreateContactButton.addEventListener('click', toggleCreateContactForm);
 createContactButton.addEventListener('click', createContact);
-clearListButton.addEventListener('click', clearList);
+clearContactListButton.addEventListener('click', clearContactList);
+
+// Hide createContactForm on page load
+toggleCreateContactForm();
