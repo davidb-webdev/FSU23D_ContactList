@@ -64,7 +64,7 @@ function toggleEditContact(event) {
 		return;
 	}
 
-	// Toggle disabled and button text
+	// Toggle edit mode
 	targetListItem.children[0].disabled = !targetListItem.children[0].disabled;
 	targetListItem.children[1].disabled = !targetListItem.children[1].disabled;
 
@@ -102,8 +102,8 @@ function clearContactList() {
 
 function toggleCreateContactForm() {
 	const createContactForm = document.getElementById('createContactForm');
-	
-	if (createContactForm.hidden === false) {
+
+	if (!createContactForm.classList.contains('hidden')) {
 		const createContactName = document.getElementById('createContactName');
 		const createContactPhone = document.getElementById('createContactPhone');
 
@@ -116,9 +116,9 @@ function toggleCreateContactForm() {
 			createContactForm.querySelector('.errorMessage').remove();
 		}
 
-		createContactForm.hidden = true;
+		createContactForm.classList.add('hidden');
 	} else {
-		createContactForm.hidden = false;
+		createContactForm.classList.remove('hidden');
 	}
 
 	console.log(`Contact form hidden? (${createContactForm.hidden})`);
@@ -135,4 +135,4 @@ createContactButton.addEventListener('click', createContact);
 clearContactListButton.addEventListener('click', clearContactList);
 
 // Hide createContactForm on page load
-toggleCreateContactForm();
+// toggleCreateContactForm();
