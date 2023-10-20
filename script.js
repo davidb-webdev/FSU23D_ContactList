@@ -16,7 +16,6 @@ function validateInput(event) {
 			errorMessage.className = 'errorMessage';
 			errorMessage.innerText = 'Kontakter får inte innehålla tomma fält';
 			textField.parentNode.insertBefore(errorMessage, textField.nextSibling);
-
 			return false;
 		}
 	}
@@ -111,7 +110,6 @@ function toggleCreateContactForm() {
 	}
 }
 
-// Event listeners
 const toggleCreateContactButton = document.getElementById('toggleCreateContactButton');
 const createContactButton = document.getElementById('createContactButton');
 const clearContactListButton = document.getElementById('clearContactListButton');
