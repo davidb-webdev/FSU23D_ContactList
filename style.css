@@ -190,7 +190,13 @@ button .longLabel {
 
 /* =============== Media Queries =============== */
 
-@media (min-width: 500px) {
+@media (min-width: 450px) {
+	button .longLabel {
+		display: initial;
+	}
+}
+
+@media (min-width: 620px) {
 	li {
 		grid-template-columns: 1fr 1fr auto auto;
 		grid-template-rows: auto auto;
@@ -205,25 +211,7 @@ button .longLabel {
 			grid-column: 1 / -1;
 			grid-row: 2;
 		}
-	
-	button .longLabel {
-		display: initial;
-	}
-}
 
-/* Hide unhovered buttons on devices that support hover */
-@media (hover: hover) {
-	li button {
-		opacity: 0;
-		transition: var(--quick) opacity;
-	}
-
-	li:hover button, li.editMode button {
-		opacity: 1;
-	}
-}
-
-@media (min-width: 800px) {
 	#createContactForm {
 		width: auto;
 		max-width: 400px;
@@ -237,4 +225,16 @@ button .longLabel {
 		#createContactForm.hidden {
 			transform: translate(50%, 300%);
 		}
+}
+
+/* Hide unhovered buttons on devices that support hover */
+@media (hover: hover) {
+	li button {
+		opacity: 0;
+		transition: var(--quick) opacity;
+	}
+
+	li:hover button, li.editMode button {
+		opacity: 1;
+	}
 }
