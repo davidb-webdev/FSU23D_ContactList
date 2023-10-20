@@ -12,8 +12,6 @@ function validateInput(event) {
 	// Check for empty text fields
 	for (const textField of textFields) {
 		if (!textField.value) {
-			console.log(`Text field '${textField.id}' / '${textField.className}' is empty`);
-
 			let errorMessage = document.createElement('p');
 			errorMessage.className = 'errorMessage';
 			errorMessage.innerText = 'Kontakter får inte innehålla tomma fält';
@@ -23,7 +21,6 @@ function validateInput(event) {
 		}
 	}
 }
-
 
 function createContact(event) {
 	event.preventDefault();
@@ -52,11 +49,8 @@ function createContact(event) {
 	listItem.querySelector('.deleteContactButton').addEventListener('click', deleteContact);
 	contactList.appendChild(listItem);
 
-	console.log(`Created contact with name '${createContactName.value}' and phone number '${createContactPhone.value}'`);
-
 	toggleCreateContactForm(); // Hide contact form
 }
-
 
 function toggleEditContact(event) {
 	const targetListItem = event.target.parentNode;
@@ -80,32 +74,20 @@ function toggleEditContact(event) {
 	}
 	targetListItem.children[0].disabled = !targetListItem.children[0].disabled;
 	targetListItem.children[1].disabled = !targetListItem.children[1].disabled;
-
-	targetListItem.children[0].disabled
-		? console.log(`Saved contact '${targetListItem.children[0].value}'`)
-		: console.log(`Edit mode enabled on contact '${targetListItem.children[0].value}'`)
-	;
 }
-
 
 function deleteContact(event) {
 	const targetListItem = event.target.parentNode;
 	targetListItem.remove();
-	console.log(`Deleted contact '${targetListItem.children[0].value}'`);
 }
-
 
 function clearContactList() {
 	const listItems = document.querySelectorAll('#contactList li');
 
-	console.log(`Deleting all contacts...`);
 	for (const listItem of listItems) {
 		listItem.remove();
-		console.log(`Deleted contact '${listItem.children[0].value}'`);
 	}
-	console.log(`All contacts deleted`);
 }
-
 
 function toggleCreateContactForm() {
 	const createContactForm = document.getElementById('createContactForm');
@@ -127,10 +109,7 @@ function toggleCreateContactForm() {
 		createContactName.focus();
 		createContactForm.classList.remove('hidden');
 	}
-
-	console.log(`Contact form hidden? (${createContactForm.hidden})`);
 }
-
 
 // Event listeners
 const toggleCreateContactButton = document.getElementById('toggleCreateContactButton');
