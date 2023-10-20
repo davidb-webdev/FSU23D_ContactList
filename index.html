@@ -13,23 +13,26 @@
 	<header>
 		<h1>Kontaktlista</h1>
 		<div>
-			<input type="button" id="toggleCreateContactButton" value="+">
-			<input type="button" id="clearContactListButton" value="x">
+			<button id="toggleCreateContactButton">
+				<span class="shortLabel">➕</span>
+				<span class="longLabel">Ny kontakt</span>
+			</button>
+
+			<button id="clearContactListButton">
+				<span class="shortLabel">🗑️</span>
+				<span class="longLabel">Radera lista</span>
+			</button>
 		</div>
 	</header>
 
 	<main>
 		<form id="createContactForm" class="hidden">
-			<label for="createContactName">
-				<span>Namn</span>
-				<input type="text" id="createContactName">
-			</label>
-	
-			<label for="createContactPhone">
-				<span>Telefon</span>
-				<input type="tel" id="createContactPhone">
-			</label>
-
+			<label for="createContactName">Namn</label>
+			<input type="text" id="createContactName">
+			
+			<label for="createContactPhone">Telefon</label>
+			<input type="tel" id="createContactPhone">
+			
 			<input type="submit" id="createContactButton" value="Skapa kontakt">
 		</form>
 

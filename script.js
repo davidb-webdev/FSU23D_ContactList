@@ -4,7 +4,7 @@ function validateInput(event) {
 	const targetParent = event.target.parentNode;
 	const textFields = targetParent.querySelectorAll('input[type="text"], input[type="tel"]');
 
-	// Remove any previous error messages
+	// Remove pre-existing error message, if any
 	if (targetParent.querySelector('.errorMessage')) {
 		targetParent.querySelector('.errorMessage').remove();
 	}
@@ -12,12 +12,12 @@ function validateInput(event) {
 	// Check for empty text fields
 	for (const textField of textFields) {
 		if (!textField.value) {
-			console.log(`Text field '${textField.id}' / '${textField.className}' is empty`);
+			// console.log(`Text field '${textField.id}' / '${textField.className}' is empty`);
 
 			let errorMessage = document.createElement('p');
 			errorMessage.className = 'errorMessage';
 			errorMessage.innerText = 'Kontakter får inte innehålla tomma fält';
-			textField.parentNode.appendChild(errorMessage);
+			textField.parentNode.insertBefore(errorMessage, textField.nextSibling);
 
 			return false;
 		}
@@ -29,9 +29,7 @@ function createContact(event) {
 	event.preventDefault();
 
 	// Validate text fields
-	if (validateInput(event) === false) {
-		return;
-	}
+	if (validateInput(event) === false) {return;}
 
 	const createContactName = document.getElementById('createContactName');
 	const createContactPhone = document.getElementById('createContactPhone');
@@ -40,19 +38,24 @@ function createContact(event) {
 	const listItem = document.createElement('li');
 	listItem.innerHTML =
 	`
-		<input type="text" class="contactName" value="${createContactName.value}" disabled>
-		<input type="tel" class="contactPhone" value="${createContactPhone.value}" disabled>
-		<input type="button" class="editContactButton" value="Ändra">
-		<input type="button" class="deleteContactButton" value="Radera">
+		<input type="text" class="contactName" value="${createContactName.value}" aria-label="Contact name" disabled>
+		<input type="tel" class="contactPhone" value="${createContactPhone.value}" aria-label="Phone number" disabled>
+		<button class="editContactButton">
+			<span class="shortLabel">✏️</span>
+			<span class="longLabel">Ändra</span>
+		</button>
+		<button class="deleteContactButton">
+			<span class="shortLabel">🗑️</span>
+			<span class="longLabel">Radera</span>
+		</button>
 	`;
-	listItem.getElementsByClassName('editContactButton')[0].addEventListener('click', toggleEditContact);
-	listItem.getElementsByClassName('deleteContactButton')[0].addEventListener('click', deleteContact);
+	listItem.querySelector('.editContactButton').addEventListener('click', toggleEditContact);
+	listItem.querySelector('.deleteContactButton').addEventListener('click', deleteContact);
 	contactList.appendChild(listItem);
 
 	console.log(`Created contact with name '${createContactName.value}' and phone number '${createContactPhone.value}'`);
 
-	// Hide contact form
-	toggleCreateContactForm();
+	toggleCreateContactForm(); // Hide contact form
 }
 
 
@@ -60,19 +63,26 @@ function toggleEditContact(event) {
 	const targetListItem = event.target.parentNode;
 
 	// Validate text fields
-	if (validateInput(event) === false) {
-		return;
-	}
+	if (validateInput(event) === false) {return;}
 
 	// Toggle edit mode
+	if (event.target.classList.contains('editMode')) {
+	event.target.classList.remove('editMode');
+	event.target.innerHTML =
+		`
+			<span class="shortLabel">✏️</span>
+			<span class="longLabel">Ändra</span>
+		`;
+	} else {
+		event.target.classList.add('editMode');
+		event.target.innerHTML =
+		`
+			<span class="shortLabel">💾</span>
+			<span class="longLabel">Spara</span>
+		`;
+	}
 	targetListItem.children[0].disabled = !targetListItem.children[0].disabled;
 	targetListItem.children[1].disabled = !targetListItem.children[1].disabled;
-
-	if (targetListItem.children[2].value === 'Ändra') {
-		targetListItem.children[2].value = 'Spara';
-	} else {
-		targetListItem.children[2].value = 'Ändra';
-	}
 
 	targetListItem.children[0].disabled
 		? console.log(`Saved contact '${targetListItem.children[0].value}'`)
@@ -118,9 +128,9 @@ function toggleCreateContactForm() {
 
 		createContactForm.classList.add('hidden');
 	} else {
+		createContactName.focus();
 		createContactForm.classList.remove('hidden');
 	}
-
 	console.log(`Contact form hidden? (${createContactForm.hidden})`);
 }
 
@@ -133,6 +143,3 @@ const clearContactListButton = document.getElementById('clearContactListButton')
 toggleCreateContactButton.addEventListener('click', toggleCreateContactForm);
 createContactButton.addEventListener('click', createContact);
 clearContactListButton.addEventListener('click', clearContactList);
-
-// Hide createContactForm on page load
-// toggleCreateContactForm();

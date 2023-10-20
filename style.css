@@ -2,11 +2,13 @@
 
 :root {
 	--background-color: #14161c;
+	--alternate-background-color: #171920;
 	--overlay-color: #333847;
 	--foreground-color: #fff;
 	--mid-color: #b1b8cc;
 	--light-color: #d9e0f4;
 	--accent-color: #07288e;
+	--error-color: red;
 	
 	--border-radius-default: 1rem;
 	--border-radius-wide: 3rem;
@@ -25,7 +27,8 @@
 }
 
 
-/* =============== Styling =============== */
+/* =============== General styles =============== */
+
 * {
 	box-sizing: border-box;
 }
@@ -47,10 +50,6 @@ header {
 	border-bottom: var(--border-default);
 	display: flex;
 	justify-content: space-between;
-}
-
-header input[type="button"] {
-	margin: 0;
 }
 
 h1 {
@@ -76,16 +75,24 @@ ul {
 	padding: 0;
 }
 
-ul:empty::after {
-	content: 'Inga kontakter än';
-	display: block;
-	text-align: center;
-	line-height: calc(100vh - var(--header-height));
-}
+	ul:empty::after {
+		content: 'Inga kontakter än';
+		display: block;
+		text-align: center;
+		line-height: calc(100vh - var(--header-height));
+	}
 
 li {
 	padding: var(--space-default);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: end;
+	gap: 2%;
 }
+
+	li:nth-child(even) {
+		background-color: var(--alternate-background-color);
+	}
 
 input {
 	font-size: 1rem;
@@ -107,36 +114,52 @@ input[type="text"], input[type="tel"] {
 		border-color: var(--foreground-color);
 	}
 
-input[type="button"], input[type="submit"] {
+button, input[type="submit"] {
+	border-radius: var(--border-radius-default);
 	background-color: var(--foreground-color);
 	color: var(--accent-color);
+	margin: var(--space-narrow) 0 var(--space-default);
 	padding: var(--space-default) var(--space-wide);
 	border: none;
 	border-bottom: var(--button-border);
 	text-transform: uppercase;
 	font-weight: 600;
 	font-size: 0.8rem;
+	cursor: pointer;
 	transition: var(--quick) background-color;
+	white-space: nowrap;
 }
 
-	input[type="button"]:hover, input[type="submit"]:hover {
+	header button {
+		margin: 0 0 0 var(--space-narrow);
+	}
+
+	button:hover, input[type="submit"]:hover {
 		background-color: var(--light-color);
 	}
 
-	input[type="button"]:active, input[type="submit"]:active {
+	button:active, input[type="submit"]:active {
 		border-bottom: none;
 		transform: translateY(4px);
 	}
 
-	#createContactForm input[type="button"]:active, #createContactForm input[type="submit"]:active {
+	#createContactForm button:active, #createContactForm input[type="submit"]:active {
 		transform: none;
 		margin-top: calc(var(--space-narrow) + 4px);
 	}
 
-input:disabled {
-	background-color: transparent;
-	border-color: transparent;
-	color: var(--foreground-color);
+	input:disabled {
+		background-color: transparent;
+		border-color: transparent;
+		color: var(--foreground-color);
+	}
+
+button span {
+	pointer-events: none; /* Prevent button spans from being the target of events in JS */
+}
+
+button .longLabel {
+	display: none;
 }
 
 #createContactForm {
@@ -152,22 +175,49 @@ input:disabled {
 		transform: translateY(100%);
 	}
 
-#createContactForm .errorMessage {
-	color: red;
+.errorMessage {
+	width: 100%;
+	color: var(--error-color);
 	text-align: center;
 }
 
-#contactList .errorMessage {
-	position: absolute;
-	bottom: 1vh;
-	left: 50%;
-	text-align: center;
-	transform: translateX(-50%);
-	background-color: var(--overlay-color);
-	color: var(--foreground-color);
-	padding: var(--space-wide);
-	border-radius: var(--border-radius-wide);
-	width: auto;
-	white-space: nowrap;
-	max-width: 100%;
+
+/* =============== Media Queries =============== */
+
+@media (min-width: 500px) {
+	li {
+		flex-wrap: nowrap;
+	}
+
+	button .longLabel {
+		display: initial;
+	}
+}
+
+@media (hover: hover) and (min-width: 500px) {
+	#contactList li button {
+		width: 30%;
+		min-width: 6.5rem;
+		opacity: 0;
+		transition: var(--quick) opacity;
+	}
+
+	#contactList li:hover button {
+		opacity: 1;
+	}
+}
+
+@media (min-width: 800px) {
+	#createContactForm {
+		width: auto;
+		bottom: 50%;
+		right: 50%;
+		padding: var(--space-wide);
+		border-radius: var(--border-radius-default);
+		transform: translate(50%, 50%);
+	}
+
+		#createContactForm.hidden {
+			transform: translate(50%, 300%);
+		}
 }
