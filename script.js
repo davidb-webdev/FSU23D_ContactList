@@ -4,7 +4,7 @@ function validateInput(event) {
 	const targetParent = event.target.parentNode;
 	const textFields = targetParent.querySelectorAll('input[type="text"], input[type="tel"]');
 
-	// Remove pre-existing error message, if any
+	// Remove pre-existing error message (if any)
 	if (targetParent.querySelector('.errorMessage')) {
 		targetParent.querySelector('.errorMessage').remove();
 	}
@@ -12,7 +12,7 @@ function validateInput(event) {
 	// Check for empty text fields
 	for (const textField of textFields) {
 		if (!textField.value) {
-			// console.log(`Text field '${textField.id}' / '${textField.className}' is empty`);
+			console.log(`Text field '${textField.id}' / '${textField.className}' is empty`);
 
 			let errorMessage = document.createElement('p');
 			errorMessage.className = 'errorMessage';
@@ -28,8 +28,7 @@ function validateInput(event) {
 function createContact(event) {
 	event.preventDefault();
 
-	// Validate text fields
-	if (validateInput(event) === false) {return;}
+	if (validateInput(event) === false) {return} // Validate text fields
 
 	const createContactName = document.getElementById('createContactName');
 	const createContactPhone = document.getElementById('createContactPhone');
@@ -62,19 +61,17 @@ function createContact(event) {
 function toggleEditContact(event) {
 	const targetListItem = event.target.parentNode;
 
-	// Validate text fields
-	if (validateInput(event) === false) {return;}
+	if (validateInput(event) === false) {return} // Validate text fields
 
-	// Toggle edit mode
-	if (event.target.classList.contains('editMode')) {
-	event.target.classList.remove('editMode');
-	event.target.innerHTML =
+	if (targetListItem.classList.contains('editMode')) {
+		targetListItem.classList.remove('editMode');
+		event.target.innerHTML =
 		`
 			<span class="shortLabel">✏️</span>
 			<span class="longLabel">Ändra</span>
 		`;
 	} else {
-		event.target.classList.add('editMode');
+		targetListItem.classList.add('editMode');
 		event.target.innerHTML =
 		`
 			<span class="shortLabel">💾</span>
@@ -112,10 +109,11 @@ function clearContactList() {
 
 function toggleCreateContactForm() {
 	const createContactForm = document.getElementById('createContactForm');
+	const createContactName = document.getElementById('createContactName');
+	const createContactPhone = document.getElementById('createContactPhone');
 
 	if (!createContactForm.classList.contains('hidden')) {
-		const createContactName = document.getElementById('createContactName');
-		const createContactPhone = document.getElementById('createContactPhone');
+		createContactForm.classList.add('hidden');
 
 		// Reset form
 		createContactName.value = '';
@@ -125,12 +123,11 @@ function toggleCreateContactForm() {
 		if (createContactForm.querySelector('.errorMessage')) {
 			createContactForm.querySelector('.errorMessage').remove();
 		}
-
-		createContactForm.classList.add('hidden');
 	} else {
 		createContactName.focus();
 		createContactForm.classList.remove('hidden');
 	}
+
 	console.log(`Contact form hidden? (${createContactForm.hidden})`);
 }
 
